@@ -44,7 +44,8 @@ class CreatePlaylist:
         """Grab Our Liked Videos & Create A Dictionary Of Important Song Information"""
         request = self.youtube_client.videos().list(
             part="snippet,contentDetails,statistics",
-            myRating="like"
+            myRating="like",
+            maxResults=50  # 設定超過五首
         )
         response = request.execute()
 
@@ -112,7 +113,6 @@ class CreatePlaylist:
             }
         )
         response_json = response.json()
-        print(response_json)
         songs = response_json["tracks"]["items"]
 
         # only use the first song
