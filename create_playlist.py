@@ -25,7 +25,7 @@ class CreatePlaylist:
 
         api_service_name = "youtube"
         api_version = "v3"
-        client_secrets_file = "client_secret_235023335785-6jaro04l796j224aft4h0a19f4eqsoa5.apps.googleusercontent.com.json"
+        client_secrets_file = "client_secret.json"
 
         # Get credentials and create an API client
         scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
@@ -112,6 +112,7 @@ class CreatePlaylist:
             }
         )
         response_json = response.json()
+        print(response_json)
         songs = response_json["tracks"]["items"]
 
         # only use the first song
