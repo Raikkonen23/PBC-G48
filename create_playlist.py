@@ -101,9 +101,8 @@ class CreatePlaylist:
     # Step 4: Search For the Song
     def get_spotify_uri(self, song_name, artist):
         """Search For the Song"""
-        query = "https://api.spotify.com/v1/search?query=track%3A{}+artist%3A{}&type=track&offset=0&limit=20".format(
-            song_name,
-            artist
+        query = "https://api.spotify.com/v1/search?query=track%3A{}&type=track&offset=0&limit=20".format(
+            song_name
         )
         response = requests.get(
             query,
@@ -113,11 +112,16 @@ class CreatePlaylist:
             }
         )
         response_json = response.json()
+        # print(response_json["tracks"]["items"])
         songs = response_json["tracks"]["items"]
 
-        # only use the first song
-        uri = songs[0]["uri"]
 
+        # only use the first song
+        if len(songs) != 0:
+            uri = songs[0]["uri"]
+        else:
+            print(response_json)
+            uri = False
         return uri
 
     # Step 5: Add this song into the new Spotify playlist
@@ -128,7 +132,8 @@ class CreatePlaylist:
 
         # collect all of uri
         uris = [info["spotify_uri"]
-                for song, info in self.all_song_info.items()]
+                for song, info in self.all_song_info.items() if info["spotify_uri"] != False]
+
 
         # create a new playlist
         playlist_id = self.create_playlist()
