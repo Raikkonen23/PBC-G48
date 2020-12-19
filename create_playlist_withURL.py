@@ -11,7 +11,9 @@ from googleapiclient.discovery import build
 from exceptions import ResponseException
 from secrets import spotify_token, spotify_user_id
 
-playlist_id = input("Enter youtube playlist id: ")
+playlist_full_url = input("Enter youtube playlist id: ").split('list=')
+playlist_id = playlist_full_url[1]
+
 
 class CreatePlaylist:
     DEVELOPER_KEY = 'AIzaSyBT1NAr3RT8PtquaxymwuzWR8pO4ZcUREs'
@@ -115,7 +117,7 @@ class CreatePlaylist:
             }
         )
         response_json = response.json()
-        # print(response_json)
+        print(response_json)
         songs = response_json["tracks"]["items"]
 
         # only use the first song
