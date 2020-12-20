@@ -60,6 +60,7 @@ class CreatePlaylist:
             except:
                 pass
 
+            print(video)
             song_name = video["track"]
             artist = video["artist"]
 
@@ -166,3 +167,4 @@ class CreatePlaylist:
 if __name__ == '__main__':
     cp = CreatePlaylist()
     cp.add_song_to_playlist()
+    print("OK!")
