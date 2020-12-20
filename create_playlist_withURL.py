@@ -60,7 +60,7 @@ class CreatePlaylist:
             except:
                 pass
 
-            print(video)
+            # print(video)
             song_name = video["track"]
             artist = video["artist"]
 
@@ -77,6 +77,7 @@ class CreatePlaylist:
     # Step 3: Create A New Playlist
     def create_playlist(self):
         """Create A New Playlist"""
+        # 將等等要post的data用request_body存起來，轉換成JSON格式
         request_body = json.dumps({
              "name": "YT Liked Songs",
              "description": "PBC Project",
