@@ -31,6 +31,7 @@ class CreatePlaylist:
         self.all_song_info = {}
         self.playlist_id = playlist_id
 
+
     # Step 2: Grab Our Liked Videos & Create a Dictionary of Important Songs
     def get_videos(self, youtube, playlist_id, page_token=None):
         """Grab Our Liked Videos & Create A Dictionary Of Important Song Information"""
@@ -65,6 +66,7 @@ class CreatePlaylist:
 
             # print(video)
             song_name = video["track"]
+            album = video["album"]
             artist = video["artist"]
 
             if song_name is not None and artist is not None:
@@ -73,9 +75,10 @@ class CreatePlaylist:
                     "youtube_url": youtube_url,
                     "song_name": song_name,
                     "artist": artist,
+                    "album":album,
 
                     # add the uri, easy to get song to put into playlist
-                    "spotify_uri": self.get_spotify_uri(song_name, artist)
+                    "spotify_uri": self.get_spotify_uri(song_name, artist, album)
                 }
     # Step 3: Create A New Playlist
     def create_playlist(self):
@@ -103,10 +106,13 @@ class CreatePlaylist:
         return response_json.get("id")
 
     # Step 4: Search For the Song
-    def get_spotify_uri(self, song_name, artist):
+    def get_spotify_uri(self, song_name, artist, album):
         """Search For the Song"""
-        query = "https://api.spotify.com/v1/search?q={}&type=track&limit=20&offset=0".format(
-            song_name
+        query = "https://api.spotify.com/v1/search?q=track:{}+artist:{}+album:{}&type=track,artist,album&limit=20&offset=0".format(
+            song_name,
+            artist,
+            album
+
         )
         '''query = "https://api.spotify.com/v1/search?query=track%3A{}+artist%3A{}&type=track&offset=0&limit=20".format(
             song_name,
@@ -120,14 +126,12 @@ class CreatePlaylist:
             }
         )
         response_json = response.json()
-        print(response_json)
         songs = response_json["tracks"]["items"]
 
         # only use the first song
         if len(songs) != 0:
             uri = songs[0]["uri"]
         else:
-            print(response_json)
             uri = False
         return uri
 
@@ -160,9 +164,8 @@ class CreatePlaylist:
         )
 
         # check for valid response status
-        if response.status_code != 200:
-            pass
-            # raise ResponseException(response.status_code)
+        # if response.status_code != 200:
+        #     raise ResponseException(response.status_code)
 
         response_json = response.json()
         return response_json
