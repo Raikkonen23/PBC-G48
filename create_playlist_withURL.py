@@ -11,8 +11,9 @@ from googleapiclient.discovery import build
 from exceptions import ResponseException
 from secrets import spotify_token, spotify_user_id
 
-playlist_full_url = input("Enter youtube playlist id: ").split('list=')
-playlist_id = playlist_full_url[1]
+playlist_id = input("Enter youtube playlist id: ")
+# playlist_full_url = input("Enter youtube playlist id: ").split('list=')
+# playlist_id = playlist_full_url[1]
 
 
 class CreatePlaylist:
@@ -104,7 +105,7 @@ class CreatePlaylist:
     # Step 4: Search For the Song
     def get_spotify_uri(self, song_name, artist):
         """Search For the Song"""
-        query = "https://api.spotify.com/v1/search?query=track%3A{}&type=track&offset=0&limit=20".format(
+        query = "https://api.spotify.com/v1/search?q={}&type=track&limit=20&offset=0".format(
             song_name
         )
         '''query = "https://api.spotify.com/v1/search?query=track%3A{}+artist%3A{}&type=track&offset=0&limit=20".format(
