@@ -1,0 +1,3 @@
+SPOTIFY_ID = ''
+SPOTIFY_TOKEN = ''
+YOUTUBE_URL = ''
