@@ -31,7 +31,6 @@ class CreatePlaylist:
         self.all_song_info = {}
         self.playlist_id = playlist_id
 
-
     # Step 2: Grab Our Liked Videos & Create a Dictionary of Important Songs
     def get_videos(self, youtube, playlist_id, page_token=None):
         """Grab Our Liked Videos & Create A Dictionary Of Important Song Information"""
@@ -80,6 +79,9 @@ class CreatePlaylist:
                     # add the uri, easy to get song to put into playlist
                     "spotify_uri": self.get_spotify_uri(song_name, artist, album)
                 }
+            else:
+                print("not found")
+
     # Step 3: Create A New Playlist
     def create_playlist(self):
         """Create A New Playlist"""
@@ -114,10 +116,6 @@ class CreatePlaylist:
             album
 
         )
-        '''query = "https://api.spotify.com/v1/search?query=track%3A{}+artist%3A{}&type=track&offset=0&limit=20".format(
-            song_name,
-            artist
-        )'''
         response = requests.get(
             query,
             headers={
@@ -131,8 +129,10 @@ class CreatePlaylist:
         # only use the first song
         if len(songs) != 0:
             uri = songs[0]["uri"]
+            # print(songs[0]["album"]["artists"])
         else:
             uri = False
+            print(uri)
         return uri
 
     # Step 5: Add this song into the new Spotify playlist
