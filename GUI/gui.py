@@ -2,12 +2,11 @@ import tkinter as tk
 import tkinter.font as tkfont
 from PIL import ImageTk, Image
 import webbrowser
-
-
+import os
 
 SPOTIFY_ID = -1
 SPOTIFY_TOKEN = -1
-YOUTUBE_URL = -1
+YOUTUBE_ID = -1
 
 class App(tk.Tk):
 
@@ -97,8 +96,8 @@ class PageOne(tk.Frame):
     def p1_entry(self):
         global SPOTIFY_ID
         global SPOTIFY_TOKEN
-        SPOTIFY_ID = self.entry_id.get()
-        SPOTIFY_TOKEN =self.entry_token.get()
+        SPOTIFY_ID = self.entry_id.get().strip('\n ')
+        SPOTIFY_TOKEN =self.entry_token.get().strip('\n ')
 
 
 
@@ -120,12 +119,31 @@ class PageTwo(tk.Frame):
         self.entry_YT_url.place(x=50, y=170)
 
     def p2_entry(self):
-        global YOUTUBE_URL
-        YOUTUBE_URL = self.entry_YT_url.get()
-        print(SPOTIFY_ID, SPOTIFY_TOKEN, YOUTUBE_URL)
+        '''
+        self.transform_png = tk.PhotoImage(file='transforming.png')
+        self.transform_label = tk.Label(self, image=self.transform_png)
+        self.transform_label.place(x=150, y=270)'''
 
+        global YOUTUBE_ID
+        full_yt_url = self.entry_YT_url.get().strip('\n ')
+        for_getting_id = full_yt_url.split('&')
+        for i in for_getting_id:
+            possible_id = i.split('=')
+            if possible_id[0] == 'list':
+                YOUTUBE_ID = possible_id[1]
+                print('id get!')
+        # print(SPOTIFY_ID, SPOTIFY_TOKEN, YOUTUBE_ID)
 
+        with open('all_secrets.txt', 'w') as in_put:
+            in_put.write(SPOTIFY_ID + '\n')
+            in_put.write(SPOTIFY_TOKEN + '\n')
+            in_put.write(YOUTUBE_ID + '\n')
+            in_put.close()
 
+        os.system('create_playlist_withURL.py')
+        self.transform_done_png = tk.PhotoImage(file='transformed.png')
+        self.transform_done_label = tk.Label(self, image=self.transform_done_png)
+        self.transform_done_label.place(x=95, y=270)
 
 if __name__ == "__main__":
     app = App()
