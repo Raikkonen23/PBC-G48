@@ -34,16 +34,8 @@ class CreatePlaylist:
 
     # Step 2: Grab Our Liked Videos & Create a Dictionary of Important Songs
     def get_videos(self, youtube, playlist_id, page_token=None):
-        """Grab Our Liked Videos & Create A Dictionary Of Important Song Information"""
-        """
-        request = self.youtube_client.videos().list(
-            part="snippet,contentDetails,statistics",
-            myRating="like",
-            maxResults=50  # 設定超過五首
-        )
-        response = request.execute()
-        """
 
+        """Grab Our Liked Videos & Create A Dictionary Of Important Song Information"""
         result = youtube.playlistItems().list(
             part="snippet",
             playlistId=playlist_id,
@@ -57,6 +49,9 @@ class CreatePlaylist:
             youtube_url = "https://www.youtube.com/watch?v={}".format(
                 item['snippet']['resourceId']["videoId"])
 
+            if video_title == 'Deleted video':  # 若影片被刪除，跳過此輪
+                continue
+
             # use youtube_dl to collect the song name & artist name
             try:
                 video = youtube_dl.YoutubeDL({}).extract_info(
@@ -64,7 +59,6 @@ class CreatePlaylist:
             except:
                 pass
 
-            # print(video)
             song_name = video["track"]
             album = video["album"]
             artist = video["artist"]
@@ -78,7 +72,7 @@ class CreatePlaylist:
                     "album":album,
 
                     # add the uri, easy to get song to put into playlist
-                    "spotify_uri": self.get_spotify_uri(song_name, artist, album)
+                    "spotify_uri": self.get_spotify_uri(song_name, artist)
                 }
             else:
                 print("not found")
@@ -109,12 +103,12 @@ class CreatePlaylist:
         return response_json.get("id")
 
     # Step 4: Search For the Song
-    def get_spotify_uri(self, song_name, artist, album):
+    def get_spotify_uri(self, song_name, artist):
         """Search For the Song"""
-        query = "https://api.spotify.com/v1/search?q=track:{}+artist:{}+album:{}&type=track,artist,album&limit=20&offset=0".format(
+        query = "https://api.spotify.com/v1/search?q=track:{}+artist:{}&type=track,artist,album&limit=20&offset=0".format(
             song_name,
             artist,
-            album
+            
 
         )
         response = requests.get(
@@ -130,7 +124,6 @@ class CreatePlaylist:
         # only use the first song
         if len(songs) != 0:
             uri = songs[0]["uri"]
-            # print(songs[0]["album"]["artists"])
         else:
             uri = False
             print(uri)

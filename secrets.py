@@ -1,3 +1,0 @@
-# Make sure to fill in your spotify client_secret information
-spotify_token = "BQAELa2aSda6yJD2BwwAtS_4xbueZ63Im15vFXKyu7A43fXuE_cgtGE0WBfkRrRdURopvF9UdmNgO-yXHqTQ_K2YEc41cfSBkOyPT5cRz_aHrzrCYLZ5S5kUc_7QF0KVN5RgbEpRWtFAEL5JEvjIAPao6AuaGEVph7zEUk-oF4DMRQ"
-spotify_user_id = "doc881029"
