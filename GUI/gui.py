@@ -2,7 +2,8 @@ import tkinter as tk
 import tkinter.font as tkfont
 from PIL import ImageTk, Image
 import webbrowser
-import os
+import create_playlist_withURL
+import os 
 
 SPOTIFY_ID = -1
 SPOTIFY_TOKEN = -1
@@ -129,7 +130,7 @@ class PageTwo(tk.Frame):
         for_getting_id = full_yt_url.split('&')
         for i in for_getting_id:
             possible_id = i.split('=')
-            if possible_id[0] == 'list':
+            if possible_id[0][len(possible_id[0])-4:len(possible_id[0])] == 'list':
                 YOUTUBE_ID = possible_id[1]
                 print('id get!')
         # print(SPOTIFY_ID, SPOTIFY_TOKEN, YOUTUBE_ID)
@@ -139,8 +140,18 @@ class PageTwo(tk.Frame):
             in_put.write(SPOTIFY_TOKEN + '\n')
             in_put.write(YOUTUBE_ID + '\n')
             in_put.close()
+        
 
-        os.system('create_playlist_withURL.py')
+        
+        playlist_id = YOUTUBE_ID
+        spotify_id = SPOTIFY_ID
+        spotify_token = SPOTIFY_TOKEN
+        cp = create_playlist_withURL.CreatePlaylist(spotify_id, spotify_token, playlist_id)
+        cp.add_song_to_playlist()
+        print("OK!")
+
+        # os.system('create_playlist_withURL.py')
+
         self.transform_done_png = tk.PhotoImage(file='transformed.png')
         self.transform_done_label = tk.Label(self, image=self.transform_done_png)
         self.transform_done_label.place(x=95, y=270)

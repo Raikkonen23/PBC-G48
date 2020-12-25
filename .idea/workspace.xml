@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5915006-04a6-4e6e-add7-eb18f62a4768" name="Default Changelist" comment="" />
+    <list default="true" id="f5915006-04a6-4e6e-add7-eb18f62a4768" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/all_secrets.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/all_secrets.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/create_playlist_withURL.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/create_playlist_withURL.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/all_secrets.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_playlist_withURL.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/playlistid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1lk5f0MDnWJBWdYRt5H7BMf1GD7" />
   <component name="ProjectViewState">

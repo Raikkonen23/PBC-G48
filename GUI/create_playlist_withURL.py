@@ -9,7 +9,6 @@ import youtube_dl
 from googleapiclient.discovery import build
 # from exceptions import ResponseException
 
-
 # playlist_id = input("Enter youtube playlist id: ")
 # playlist_full_url = input("Enter youtube playlist id: ").split('list=')
 # playlist_id = playlist_full_url[1]
@@ -87,14 +86,13 @@ class CreatePlaylist:
              "public": True
         })
 
-        query = "https://api.spotify.com/v1/users/{}/playlists".format(
-            spotify_id)
+        query = "https://api.spotify.com/v1/users/{}/playlists".format(self.spotify_id)
         response = requests.post(
             query,
             data=request_body,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "Bearer {}".format(spotify_token)
+                "Authorization": "Bearer {}".format(self.spotify_token)
             }
         )
         response_json = response.json()
@@ -115,7 +113,7 @@ class CreatePlaylist:
             query,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "Bearer {}".format(spotify_token)
+                "Authorization": "Bearer {}".format(self.spotify_token)
             }
         )
         response_json = response.json()
@@ -153,7 +151,7 @@ class CreatePlaylist:
             data=request_data,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "Bearer {}".format(spotify_token)
+                "Authorization": "Bearer {}".format(self.spotify_token)
             }
         )
 
@@ -165,14 +163,3 @@ class CreatePlaylist:
         return response_json
 
 
-if __name__ == '__main__':
-    with open('all_secrets.txt', 'r') as secrets:
-        spotify_id = secrets.readline().strip('\n')
-        spotify_token = secrets.readline().strip('\n')
-        playlist_id = secrets.readline().strip('\n')
-        secrets.close()
-
-    print(spotify_id, spotify_token, playlist_id)
-    cp = CreatePlaylist(spotify_id, spotify_token, playlist_id)
-    cp.add_song_to_playlist()
-    print("OK!")
